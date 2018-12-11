@@ -16,6 +16,8 @@ from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
 
+import cv2
+
 sio = socketio.Server()
 app = Flask(__name__)
 model = None
@@ -44,8 +46,17 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 16
 controller.set_desired(set_speed)
+
+
+def _crop_image(image):
+    blur = cv2.GaussianBlur(image, (3,3), 0)
+    crop = blur[50:150,:,:]
+    resize = cv2.resize(crop, (200, 66), interpolation = cv2.INTER_AREA)
+    colorspaceYUV = cv2.cvtColor(resize, cv2.COLOR_RGB2YUV)
+
+    return colorspaceYUV
 
 
 @sio.on('telemetry')
@@ -61,7 +72,8 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
-        steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
+        image_cropped = _crop_image(image_array)
+        steering_angle = float(model.predict(image_cropped[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
 
