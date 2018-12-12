@@ -52,10 +52,9 @@ The model.py file contains the code for training and saving the convolution neur
 
 The architecture I used is a convolution neural network first utilized by Nvidia for self-driving car applications.  The network consists of 9 layers, including normalization layer, 5 convolutional layers, and 3 fully connected layers.  The image is preprocessed and converted into YUV planes, which are then passed through the network.
 
-![alt text][image1]
-
-
 The model includes ELU layers to introduce nonlinearity (model.py lines 120, 122, 124, 127, 129, 134, 136, and 138), and the data is normalized in the model using a Keras lambda layer (model.py line 117). 
+
+![alt text][image1]
 
 #### 2. Attempts to reduce overfitting in the model
 
