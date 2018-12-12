@@ -50,23 +50,26 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+The architecture I used is a convolution neural network first utilized by Nvidia for self-driving car applications.  The network consists of 9 layers, including normalization layer, 5 convolutional layers, and 3 fully connected layers.  The image is preprocessed and converted into YUV planes, which are then passed through the network.
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+![alt text][image1]
+
+
+The model includes ELU layers to introduce nonlinearity (model.py lines 120, 122, 124, 127, 129, 134, 136, and 138), and the data is normalized in the model using a Keras lambda layer (model.py line 117). 
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains l2 kernel regularization in order to reduce overfitting (model.py lines 119, 121, 123, 126, 128, 133, 135, and 137). 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting during training (code line 188-194, 211, and 214). The model was later tested via two methods. First, I tested it on a holdout set for which none of the hyperparameters had been tuned. Second, by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer with an initial learning rate of 0.0001, the learning rate was not tuned manually (model.py line 207).
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road.
 
 For details about how I created the training data, see the next section. 
 
@@ -74,23 +77,21 @@ For details about how I created the training data, see the next section.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to first see what researchers in the field had been doing for these kinds of problems.  After looking at several different architectures, I landed on the Nvidia architecture since it was simple to implement and well suited for my particular self-driving car application.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+I knew it would be a good architecture because it had convolutional layers which allowed for the model to be of a reasonable size as compared to a fully connected network.  Furthermore, the ELU layers allowed for the network to learn interesting non-linear functions.  Because the model had fewer parameters, it would be easier and quicker to train with the limited amount of data at my disposal.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set.  As I was training the model, my ModelCheckpoint saved all models which saw validation-set improvements. Although I had success very early, I decided to gather more training data to help my model generalize better.
 
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+In order to create more data for training my model, I first decided to implement a DataGenerator class which inherits the properties of the Keras Sequence class (model.py lines 17-98).  The reason why I wanted to implement this class is because it allows me to leverage some nice functionalities such as multiprocessing (model.py lines 217); therefore, I could preprocess images very quickly and theoretically speed up my training.  In my data generator, I use left and right images with steering wheel corrections.  I also create flipped images with steering corrections.  And, finally, to ensure I have enough data for my model, I gathered my own data and allowed my generator class to do the rest (model.py lines 179-180)
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 112-142) was the Nvidia self-driving car CNN architecture which consists of 9 layers, including normalization layer, 5 convolutional layers, and 3 fully connected layers.
+
+The model includes ELU layers to introduce nonlinearity (model.py lines 120, 122, 124, 127, 129, 134, 136, and 138), and the data is normalized in the model using a Keras lambda layer (model.py line 117). 
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
@@ -98,7 +99,7 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded two reverse laps on track one using center lane driving. Here is an example image of center lane driving:
 
 ![alt text][image2]
 
