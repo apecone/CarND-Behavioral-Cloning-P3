@@ -36,6 +36,9 @@ My project includes the following files:
 * model.h5 containing a trained convolution neural network 
 * writeup_report.md summarizing the results
 
+My project does not include the following files:
+* data.tgz containing all data which was used for training (~442 MB)
+
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
@@ -84,7 +87,7 @@ I knew it would be a good architecture because it had convolutional layers which
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set.  As I was training the model, my ModelCheckpoint saved all models which saw validation-set improvements. Although I had success very early, I decided to gather more training data to help my model generalize better.
 
-In order to create more data for training my model, I first decided to implement a DataGenerator class which inherits the properties of the Keras Sequence class (model.py lines 17-98).  The reason why I wanted to implement this class is because it allows me to leverage some nice functionalities such as multiprocessing (model.py lines 217); therefore, I could preprocess images very quickly and theoretically speed up my training.  In my data generator, I use left and right images with steering wheel corrections.  I also create flipped images with steering corrections.  And, finally, to ensure I have enough data for my model, I gathered my own data and allowed my generator class to do the rest (model.py lines 179-180)
+In order to create more data for training my model, I first decided to implement a DataGenerator class which inherits the properties of the Keras Sequence class (model.py lines 17-98).  The reason why I wanted to implement this class is because it allows me to leverage some nice functionalities such as multiprocessing (model.py lines 217); therefore, I could preprocess images very quickly and theoretically speed up my training.  In my data generator, I use left and right images with steering wheel corrections.  I also create flipped images with steering corrections.  The blurring was implemented to help the model to generalize to poor seeing conditions such as rain, fog, snow, etc.  And, finally, to ensure I have enough data for my model, I gathered my own data and allowed my generator class to do the rest (model.py lines 179-180).
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
