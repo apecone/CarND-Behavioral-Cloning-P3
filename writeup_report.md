@@ -19,7 +19,7 @@ The goals / steps of this project are the following:
 [image5]: ./examples/YUV_image_flipped_blurred.png "Flipped & Blurred YUV Image - Left"
 [image6]: ./examples/YUV_image_flipped_blurred_cropped.png "Flipped, Blurred & Cropped YUV Image"
 [image7]: ./examples/YUV_image_flipped_blurred_cropped_resized.png "Flipped, Blurred, Cropped, & Resized YUV Image (Final Result)"
-[image8]: ./examples/Final_result_left_flipped.png "Final Result - Left & Flipped"
+[image8]: ./examples/Final_result_left_flpped.png "Final Result - Left & Flipped"
 [image9]: ./examples/Final_result_right_flipped.png "Final Result - Right & Flipped"
 
 ## Rubric Points
