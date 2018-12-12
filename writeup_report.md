@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/cnn-architecture-nvidia.png "Model Visualization"
-[image2]: ./examples/center_2016_12_01_13_44_56_757.jpg "Original Image"
+[image2]: ./examples/RGB_image.jpg "Original Image"
 [image3]: ./examples/YUV_image.png "YUV Image"
 [image4]: ./examples/YUV_image_flipped.png "Flipped YUV Image"
 [image5]: ./examples/YUV_image_flipped_blurred.png "Flipped & Blurred YUV Image - Left"
@@ -64,7 +64,7 @@ The model was trained and validated on different data sets to ensure that the mo
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer with an initial learning rate of 0.0001, the learning rate was not tuned manually (model.py line 207).
+The model used an adam optimizer with an initial learning rate of 0.0001, beta_1 of 0.9, and beta_2 of 0.999, and 0.0 decay (model.py line 207).
 
 #### 4. Appropriate training data
 
@@ -98,28 +98,20 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two reverse laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded two reverse laps on track one using center lane driving. Because I was driving pretty fast, I had to record several times due to mistakes during recording :D 
+
+I also recorded a little bit on track 2 to help my model generalize better.
+
+Here is an example image of center lane driving:
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I never conducted any recovery routes because my augmented left and right data simulated these recovery routes for me.  Here are some examples of my preprocessed center image, along with it's left and right counterparts.
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
-
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
 ![alt text][image7]
+![alt text][image8]
+![alt text][image9]
 
-Etc ....
+I finally randomly shuffled the data set and put 9% of the data into a validation set. 
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 81 as evidenced by my saved model with the best validation loss. I used an adam optimizer so that manually training the learning rate wasn't necessary.
