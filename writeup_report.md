@@ -54,7 +54,9 @@ The architecture I used is a convolution neural network first utilized by Nvidia
 
 The model includes ELU layers to introduce nonlinearity (model.py lines 120, 122, 124, 127, 129, 134, 136, and 138), and the data is normalized in the model using a Keras lambda layer (model.py line 117). 
 
-![alt text][image1]
+| ![alt text][image1] |
+|:--:|
+| *Nvidia CNN Architecture* |
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -94,7 +96,9 @@ The model includes ELU layers to introduce nonlinearity (model.py lines 120, 122
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-![alt text][image1]
+| ![alt text][image1] |
+|:--:|
+| *Nvidia CNN Architecture* |
 
 #### 3. Creation of the Training Set & Training Process
 
@@ -104,13 +108,23 @@ I also recorded a little bit on track 2 to help my model generalize better.
 
 Here is an example image of center lane driving:
 
-![alt text][image2]
+| ![alt text][image2] |
+|:--:|
+| *Original RGB Image* |
 
 I never conducted any recovery routes because my augmented left and right data simulated these recovery routes for me.  Here are some examples of my preprocessed center image, along with it's left and right counterparts.
 
-![alt text][image7]
-![alt text][image8]
-![alt text][image9]
+| ![alt text][image7] |
+|:--:|
+| *Center Image (Final Result -- YUV, Cropped, Resized, Blurred)* |
+
+| ![alt text][image8] |
+|:--:|
+| *Right Image (Final Result -- YUV, Cropped, Resized, Blurred)* |
+
+| ![alt text][image9] |
+|:--:|
+| *Left Image (Final Result -- YUV, Cropped, Resized, Blurred)* |
 
 I finally randomly shuffled the data set and put 9% of the data into a validation set. 
 
